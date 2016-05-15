@@ -3,6 +3,7 @@
  */
 
 var STORAGE_KEY = "weather_obj";
+var LOCATION_IDX;
 
 // Code that needs to execute on the load of every page.
 // --------------------------------------------------- //
@@ -65,7 +66,10 @@ function Location (nickname, lat, lngtitude, forecast){
 
 function LocationsListCache(){
   var locations = [];
-  // TODO: Work out callbacks.
+  // TODO: Work out callbacks
+  this.locations = function() {
+    return locations;
+  };
 
   this.length = function(){
     return locations.length;
@@ -84,15 +88,16 @@ function LocationsListCache(){
   };
 
   this.toJSON = function() {
-    return {locations: locations};
+    return locations;
   };
 
   this.initialiseFromPDO = function(locationsListPDO) {
-    var locationData;
-    locations = []; //Locations emptied just in case.
-    for (var i = 0; i < locationsListPDO.locations.length; i++){
-      locationData = locationsListPDO[i];
-      locations.push(new Location().initialiseFromPDO(locationData));
+    locations = [];   // locations emptied just in case.
+    var newLocation;
+    for (var i = 0; i < locationsListPDO.length; i++){
+      newLocation = new Location();
+      newLocation.initialiseFromPDO(locationsListPDO[i]);
+      locations.push(newLocation);
     }
   };
 
@@ -108,7 +113,7 @@ function LocationsListCache(){
 }
 
 function loadLocations() {
-  var locationsListJSON = localStorage.STORAGE_KEY;
+  var locationsListJSON = localStorage.getItem(STORAGE_KEY);
   if (locationsListJSON) locationsList.initialiseFromPDO(JSON.parse(locationsListJSON));
 }
 

@@ -23,7 +23,7 @@
             <div class="mdl-layout-spacer"></div>
             <!-- Navigation -->
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="">Home</a>
+                <a class="mdl-navigation__link" id="tt_home" href="index.html"><div class="icon material-icons">home</div></a>
             </nav>
         </div>
     </header>
@@ -44,11 +44,9 @@
                     <br />
                     <span id="error"></span>
                     <div class="mdl-grid">
-                        <div class="mdl-layout-spacer"></div>
-                    <button class="mdl-button mdl-js-button mdl-button--raised" value="submit">
-                        Add Location
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="tt_addLocation" value="submit">
+                        <div class="icon material-icons">add</div>
                     </button>
-                        <div class="mdl-layout-spacer"></div>
                     </div>
                 </form>
                 </div>
@@ -60,6 +58,13 @@
     </main>
 </div>
 
+
+<div class="mdl-tooltip" for="tt_addLocation">
+    Add Location
+</div>
+<div class="mdl-tooltip" for="tt_home">
+    Home
+</div>
 <script type="text/javascript" src="js/api_keys.js"></script>
 <script type="text/javascript" src="js/WeatherCache.js"></script>
 <script type="text/javascript" src="js/addLocation.js"></script>

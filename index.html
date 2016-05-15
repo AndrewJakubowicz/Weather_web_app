@@ -3,9 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+
+    <!--Material Design Lite tags-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <!--Material Design Lite colour scheme -->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-amber.min.css" />
 </head>
-<body>
-<div id="pageBody"></div>
+<body onload="indexInit()">
+
+<!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <!-- Title -->
+            <span class="mdl-layout-title">Weather Home</span>
+            <!-- Add spacer, to align navigation to the right -->
+            <div class="mdl-layout-spacer"></div>
+            <!-- Navigation -->
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" id="tt_help" href="addlocation.html"><div class="icon material-icons">add</div></a>
+            </nav>
+        </div>
+    </header>
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <ul id="indexList"></ul>
+            </div>
+        </main>
+    </div>
+
+<div class="mdl-tooltip" for="tt_help">
+    Add a location.
+</div>
 
 <script type="text/javascript" src="js/api_keys.js"></script>
 <script type="text/javascript" src="js/WeatherCache.js"></script>
