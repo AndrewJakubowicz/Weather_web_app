@@ -3,3 +3,6 @@
 
 # Ignore webstorm files
 .idea/
+
+# Ignore api javascript file
+/js/api_keys.js
