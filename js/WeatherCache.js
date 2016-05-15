@@ -42,8 +42,8 @@ function Location (nickname, lat, lngtitude, forecast){
   this.getLongitude = function() {  return longitude  };
 
   // Gets the forecast for a specific date.
-  this.getForecast = function(string) {
-    //TODO: Fill in function
+  this.getForecast = function() {
+    return forecasts;
   };
 
   this.toJSON = function() {
@@ -66,7 +66,7 @@ function Location (nickname, lat, lngtitude, forecast){
 
 function LocationsListCache(){
   var locations = [];
-  // TODO: Work out callbacks
+  var callbacks = {};
   this.locations = function() {
     return locations;
   };
@@ -101,7 +101,39 @@ function LocationsListCache(){
     }
   };
 
+  this.getWeatherAtIndexForDate = function(index, date, callback) {
+    var url, script;
+    var location = locations[index];
+    var forecast = location.getForecast();
+    var apiString = apiStringify(location.getLatitude(), location.getLongitude(), date);
+    if (forecast.hasOwnProperty(apiString)){
+      callback(index, forecast[apiString]);
+    } else {
+      callbacks[apiString] = callback.bind(window);
+      url = "https://api.forecast.io/forecast/" + WEATHER_API_KEY +  "/" + apiString +
+            "?callback=locationsList.weatherResponse";
+      script = document.createElement("script");
+      script.src = url;
+      script.id = "script" + index;
+      document.body.appendChild(script);
+    }
+  };
 
+  this.weatherResponse = function(responseObj) {
+    var date, index, callback;
+    console.log("time", responseObj.daily.data[0].time);
+    date = new Date(responseObj.daily.data[0].time * 1000);
+    console.log(date.apiDateString());
+    var responseString = apiStringify(responseObj.latitude, responseObj.longitude, date);
+
+    if (callbacks.hasOwnProperty(responseString)){
+      index = indexForLocation(responseObj.latitude, responseObj.longitude);
+      console.log(callbacks);
+      callback = callbacks[responseString];
+      callback(index, responseObj);
+      delete callbacks[responseString];
+    }
+  };
 
   function indexForLocation(latitude, longitude){
     for (var i = 0; i < locations.length; i++){
@@ -109,6 +141,10 @@ function LocationsListCache(){
         return i;
     }
     return -1;
+  }
+
+  function apiStringify(latitude, longitude, date){
+    return latitude + "," + longitude + "," + date.apiDateString();
   }
 }
 

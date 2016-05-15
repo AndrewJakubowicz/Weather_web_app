@@ -7,11 +7,15 @@ var LOCATION = locationsList.locationAtIndex(LOCATIONINDEX);
 if (!LOCATION) location.href = "index.html"; //Redirect if no location found.
 
 function initWeather(){
+  document.getElementById("locationName").innerHTML = LOCATION.getName();
+  locationsList.getWeatherAtIndexForDate(LOCATIONINDEX, new Date(), populateWeatherValue);
+}
 
-  (function() {
-    document.getElementById("locationName").innerHTML = LOCATION.getName();
+function populateWeatherValue(index, data){
+  var data = data.daily.data[0];
+  document.getElementById("summary").innerText = data.summary;
+  document.getElementById("summary").innerText = data.summary;
 
-  })()
 }
 
 

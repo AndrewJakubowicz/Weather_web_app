@@ -4,11 +4,9 @@
 
 function indexInit() {
   ulBuilder();
-
-  // TODO: Load weather reports
 }
 
-// Builds the list for the page.
+// Builds the list for the page and initiates callbacks!
 function ulBuilder() {
   var liBuild = function(location, index){
     var li = document.createElement("li");
@@ -33,7 +31,7 @@ function ulBuilder() {
     primary_span.appendChild(image);
     primary_span.appendChild(text_span);
     li.appendChild(primary_span);
-
+    li.style.borderBottom = "1px solid #D3D3D3";
     return li;
   };
 
@@ -41,6 +39,7 @@ function ulBuilder() {
   var ul = document.getElementById("indexList");
   for (var i = 0; i < locationsList.length(); i++){
     ul.appendChild(liBuild(locationsList.locationAtIndex(i), i));
+    locationsList.getWeatherAtIndexForDate(i, new Date(), populateIndexList);
   }
 }
 
@@ -50,3 +49,24 @@ function viewLocation(index){
   location.href = "viewlocation.html";
 }
 
+function populateIndexList(index, data){
+  var image, summary, canvas;
+  var skycons = new Skycons({"color": "black"});
+
+  image = document.getElementById(index + "image");
+  image.innerHTML = "";
+  canvas = document.createElement("canvas");
+  canvas.id = index + "canvas";
+  canvas.className = "mdl-list__item-icon";
+  image.parentNode.replaceChild(canvas, image);
+  skycons.add(canvas, data.daily.data[0].icon);
+  canvas.style.width = "80px";
+  canvas.style.height = "50px";
+
+
+  skycons.play();
+
+  summary = document.getElementById(index + "summary");
+  summary.innerText = data.daily.data[0].summary;
+
+}
