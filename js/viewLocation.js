@@ -30,6 +30,7 @@ function initWeather(){
       maximumAge: 5 * 60 * 1000
     };
     document.getElementById("trash").style.display = "none";
+    document.getElementById("slider").style.display = "none";
     if ("geolocation" in navigator) {
       document.getElementById("locationName").innerHTML = "Current Location";
       navigator.geolocation.watchPosition(function(position) {
@@ -60,6 +61,12 @@ function initWeather(){
 }
 
 function populateWeatherValue(index, data){
+  var monthNames = [
+    "January", "February", "March",
+    "April", "May", "June", "July",
+    "August", "September", "October",
+    "November", "December"
+  ];
   var lat = data.latitude;
   var lng = data.longitude;
   var data = data.daily.data[0];
@@ -68,6 +75,12 @@ function populateWeatherValue(index, data){
   textString = data.temperatureMin + " - " + data.temperatureMax + "\u2103";
   document.getElementById("temperature").innerText = textString;
 
+  date = new Date(data.time * 1000);
+  var day = date.getDate();
+  var monthIndex = date.getMonth();
+  var year = date.getFullYear();
+  var dateString = day + ' ' + monthNames[monthIndex] + ' ' + year;
+  document.getElementById("dateTitle").innerText = "Weather Report for "+ dateString;
   switch (true) {
     case (data.precipIntensity <= 0.002):
       precipIntensity = "very light";
@@ -120,6 +133,13 @@ function moveMap(latitude, longitude){
     position: location
   });
 }
+
+document.getElementById("slider").addEventListener("input", function(){
+  var value = document.getElementById("slider").value;
+  value = 30 - (value % 31);
+  var date = new Date(new Date().setDate(new Date().getDate()-value));
+  locationsList.getWeatherAtIndexForDate(LOCATIONINDEX, date, populateWeatherValue);
+});
 
 function deleteLocation(){
   if (window.confirm("Are you sure you want to delete " + LOCATION.getName() + "?")){

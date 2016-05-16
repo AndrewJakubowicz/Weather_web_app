@@ -34,8 +34,10 @@
                 <div class="mdl-cell mdl-cell--6-col mdl-cell--10-col-tablet">
                     <div class="demo-card-wide mdl-card mdl-shadow--2dp" style="width: 100%">
                         <div class="mdl-card__title">
-                            <h2 class="mdl-card__title-text">Weather Report</h2>
+                            <h2 id="dateTitle" class="mdl-card__title-text">Weather Report</h2>
                         </div>
+                        <input id="slider" class="mdl-slider mdl-js-slider" type="range"
+                               min="0" max="30" value="30" tabindex="0">
                         <div class="mdl-card__actions mdl-card--border"></div>
                         <div id = "loading" class="mdl-grid">
                             <div class="mdl-layout-spacer"></div>
@@ -94,6 +96,9 @@
 </div>
 <div class="mdl-tooltip" for="tt_trash">
     Delete Location
+</div>
+<div class="mdl-tooltip" for="slider">
+    Change Date
 </div>
 
 
