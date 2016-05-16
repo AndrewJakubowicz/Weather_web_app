@@ -28,34 +28,35 @@
         </div>
     </header>
     <main class="mdl-layout__content">
-        <div class="page-content">
-            <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
-                    <br />
-                <form onsubmit="return validateSubmit()" method="get" action="index.html">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="nameInput">
-                        <label class="mdl-textfield__label" for="nameInput">Name (optional)</label>
+        <div class="page-content mdl-grid">
+            <div class="mdl-layout-spacer"></div>
+            <div class="mdl-cell mdl-cell--6-col mdl-cell--10-col-tablet">
+                    <div class="demo-card-wide mdl-card mdl-shadow--2dp" style="width: 100%">
+                        <div class="mdl-cell mdl-cell--stretch" id="map" style="width:500px; height:350px;"></div>
+                        <div class="mdl-card__actions mdl-card--border"></div>
+                        <form onsubmit="return validateSubmit()" method="get" action="index.html">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display:block; margin-left: auto; margin-right: auto;">
+                                <input class="mdl-textfield__input" type="text" id="nameInput">
+                                <label class="mdl-textfield__label" for="nameInput">Name (optional)</label>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display:block; margin-left: auto; margin-right: auto;">
+                                <input class="mdl-textfield__input" type="text" id="addressInput" value="" required>
+                                <label class="mdl-textfield__label" for="addressInput">Address</label>
+                            </div>
+                            <div class="mdl-textfield" style="display:block; margin-left: auto; margin-right: auto;">
+                                <p id="error" style="color: red;"></p>
+                            </div>
+                            <div class="mdl-grid">
+                                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="tt_addLocation" value="submit">
+                                    <div class="icon material-icons">add</div>
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label fullWidth">
-                        <input class="mdl-textfield__input" type="text" id="addressInput" value="" required>
-                        <label class="mdl-textfield__label" for="addressInput">Address</label>
-                    </div>
-                    <br />
-                    <span id="error"></span>
-                    <div class="mdl-grid">
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="tt_addLocation" value="submit">
-                        <div class="icon material-icons">add</div>
-                    </button>
-                    </div>
-                </form>
                 </div>
-                <div class="mdl-cell mdl-cell--6-col">
-                    <div class="mdl-cell mdl-cell--stretch" id="map" style="width:500px; height:350px;"></div>
-                </div>
+            <div class="mdl-layout-spacer"></div>
             </div>
-        </div>
-    </main>
+        </main>
 </div>
 
 
