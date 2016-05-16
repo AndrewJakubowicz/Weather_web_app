@@ -25,6 +25,7 @@ function geocodeAddress(){
   geocoder.geocode({'address': addressInput}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK){
       savedAddress = results[0].geometry.location;
+      console.log(savedAddress);
       map.setCenter(savedAddress);
       var marker = new google.maps.Marker({
         map: map,

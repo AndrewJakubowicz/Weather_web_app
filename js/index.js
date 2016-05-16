@@ -37,6 +37,11 @@ function ulBuilder() {
 
   // Populate the index list.
   var ul = document.getElementById("indexList");
+
+  // Current location
+  // ul.appendChild(liBuild(new Location("Current Location", 1, 1), "current"));
+
+  // The other location objects
   for (var i = 0; i < locationsList.length(); i++){
     ul.appendChild(liBuild(locationsList.locationAtIndex(i), i));
     locationsList.getWeatherAtIndexForDate(i, new Date(), populateIndexList);

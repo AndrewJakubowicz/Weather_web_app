@@ -46,6 +46,11 @@ function Location (nickname, lat, lngtitude, forecast){
     return forecasts;
   };
 
+  // Sets a property
+  this.setForecast = function(key, value){
+    forecasts[key] = value;
+  };
+
   this.toJSON = function() {
     return {
       name: name,
@@ -111,7 +116,8 @@ function LocationsListCache(){
     } else {
       callbacks[apiString] = callback.bind(window);
       url = "https://api.forecast.io/forecast/" + WEATHER_API_KEY +  "/" + apiString +
-            "?callback=locationsList.weatherResponse";
+            "?units=ca&exclude=currently,minutely,hourly,alerts,flags" +
+            "&callback=locationsList.weatherResponse";
       script = document.createElement("script");
       script.src = url;
       script.id = "script" + index;
@@ -119,16 +125,33 @@ function LocationsListCache(){
     }
   };
 
+  this.getCurrentWeather = function(latitude, longitude, callback) {
+    var url, script;
+    var apiString = apiStringify(latitude, longitude, new Date());
+    callbacks[apiString] = callback.bind(window);
+    url = "https://api.forecast.io/forecast/" + WEATHER_API_KEY +  "/" + apiString +
+      "?units=ca&exclude=currently,minutely,hourly,alerts,flags" +
+      "&callback=locationsList.weatherResponse";
+    script = document.createElement("script");
+    script.src = url;
+    script.id = "scriptcurrent";
+    document.body.appendChild(script);
+  };
+
   this.weatherResponse = function(responseObj) {
-    var date, index, callback;
-    console.log("time", responseObj.daily.data[0].time);
+    var date, index, callback, location;
     date = new Date(responseObj.daily.data[0].time * 1000);
-    console.log(date.apiDateString());
     var responseString = apiStringify(responseObj.latitude, responseObj.longitude, date);
 
     if (callbacks.hasOwnProperty(responseString)){
       index = indexForLocation(responseObj.latitude, responseObj.longitude);
-      console.log(callbacks);
+      if (index == -1) {
+        index = "current";
+      } else {
+        // Add forecast property
+        locations[index].setForecast(responseString, responseObj);
+        saveLocations();
+      }
       callback = callbacks[responseString];
       callback(index, responseObj);
       delete callbacks[responseString];

@@ -18,7 +18,7 @@
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
             <!-- Title -->
-            <span class="mdl-layout-title">Weather</span>
+            <span id="locationName" class="mdl-layout-title">Weather</span>
             <!-- Add spacer, to align navigation to the right -->
             <div class="mdl-layout-spacer"></div>
             <!-- Navigation -->
@@ -34,37 +34,50 @@
                 <div class="mdl-cell mdl-cell--6-col mdl-cell--10-col-tablet">
                     <div class="demo-card-wide mdl-card mdl-shadow--2dp" style="width: 100%">
                         <div class="mdl-card__title">
-                            <h2 id="locationName" class="mdl-card__title-text">Welcome</h2>
+                            <h2 class="mdl-card__title-text">Weather Report</h2>
                         </div>
                         <div class="mdl-card__actions mdl-card--border"></div>
-                        <div class="mdl-card__supporting-text">
-                            <h3 class="mdl-card__title-text">Summary</h3>
-                            <span id="summary">Loading...</span>
+                        <div id = "loading" class="mdl-grid">
+                            <div class="mdl-layout-spacer"></div>
+                            <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+                            <div class="mdl-layout-spacer"></div>
+                            <br />
+                            <br />
                         </div>
-                        <div class="mdl-card__actions mdl-card--border"></div>
-                        <div class="mdl-card__supporting-text">
-                            <h3 class="mdl-card__title-text">Temperature</h3>
-                            <span id="temperature">Loading...</span>
-                        </div>
-                        <div class="mdl-card__actions mdl-card--border"></div>
-                        <div class="mdl-card__supporting-text">
-                            <h3 class="mdl-card__title-text">Chance of rain</h3>
-                            <span id="precipProbability">Loading...</span>
-                        </div>
-                        <div class="mdl-card__actions mdl-card--border"></div>
-                        <div class="mdl-card__supporting-text">
-                            <h3 class="mdl-card__title-text">Summary</h3>
-                            <span id="summary">Loading...</span>
-                        </div>
-                        <div id="weatherAddition" class="mdl-layout-spacer"></div>
-                        <form onsubmit="return deleteLocation()" method="get" action="index.html">
-                            <div class="mdl-grid">
-                            <button id="tt_trash" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="submit">
-                                <i class="material-icons">delete</i>
-                            </button>
-                            </div>
 
-                        </form>
+                        <div id = "hide" style="display: none;">
+                            <div class="mdl-card__supporting-text">
+                                <h3 id="summary" class="mdl-card__title-text">Loading...</h3>
+                            </div>
+                            <div class="mdl-card__actions mdl-card--border"></div>
+                            <div class="mdl-card__supporting-text">
+                                <h3 id="temperature" class="mdl-card__title-text">Loading...</h3>
+                            </div>
+                            <div class="mdl-card__actions mdl-card--border"></div>
+                            <div class="mdl-card__supporting-text">
+                                <h3 id="precip" class="mdl-card__title-text">Loading...</h3>
+                            </div>
+                            <div class="mdl-card__actions mdl-card--border"></div>
+                            <div class="mdl-card__supporting-text">
+                                <h3 id="wind" class="mdl-card__title-text">Loading...</h3>
+                            </div>
+                            <div class="mdl-card__actions mdl-card--border"></div>
+                            <div class="mdl-card__supporting-text">
+                                <h3 id="humidity" class="mdl-card__title-text">Loading...</h3>
+                            </div>
+                        </div>
+                        <div id="map" style="width: 300px; height: 150px;"></div>
+                        <div id="weatherAddition" class="mdl-layout-spacer"></div>
+                        <div id="trash" class="mdl-card__actions mdl-card--border">
+                            <form onsubmit="return deleteLocation()" method="get" action="index.html">
+                                <div class="mdl-grid">
+                                <button id="tt_trash" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="submit">
+                                    <i class="material-icons">delete</i>
+                                </button>
+                                </div>
+
+                            </form>
+                        </div>
                         <div class="mdl-layout-spacer"></div>
                         <br />
                     </div>
