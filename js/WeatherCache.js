@@ -107,7 +107,6 @@ function LocationsListCache(){
   };
 
   this.getWeatherAtIndexForDate = function(index, date, callback) {
-    var url, script;
     var location = locations[index];
     var forecast = location.getForecast();
     var apiString = apiStringify(location.getLatitude(), location.getLongitude(), date);
@@ -115,27 +114,14 @@ function LocationsListCache(){
       callback(index, forecast[apiString]);
     } else {
       callbacks[apiString] = callback.bind(window);
-      url = "https://api.forecast.io/forecast/" + WEATHER_API_KEY +  "/" + apiString +
-            "?units=ca&exclude=currently,minutely,hourly,alerts,flags" +
-            "&callback=locationsList.weatherResponse";
-      script = document.createElement("script");
-      script.src = url;
-      script.id = "script" + index;
-      document.body.appendChild(script);
+      createWeatherScript(apiString, index);
     }
   };
 
   this.getCurrentWeather = function(latitude, longitude, callback) {
-    var url, script;
     var apiString = apiStringify(latitude, longitude, new Date());
     callbacks[apiString] = callback.bind(window);
-    url = "https://api.forecast.io/forecast/" + WEATHER_API_KEY +  "/" + apiString +
-      "?units=ca&exclude=currently,minutely,hourly,alerts,flags" +
-      "&callback=locationsList.weatherResponse";
-    script = document.createElement("script");
-    script.src = url;
-    script.id = "scriptcurrent";
-    document.body.appendChild(script);
+    createWeatherScript(apiString, "current");
   };
 
   this.weatherResponse = function(responseObj) {
@@ -168,6 +154,17 @@ function LocationsListCache(){
 
   function apiStringify(latitude, longitude, date){
     return latitude + "," + longitude + "," + date.apiDateString();
+  }
+
+  function createWeatherScript(LngLatDateString, index){
+    var script, url;
+    url = "https://api.forecast.io/forecast/" + WEATHER_API_KEY +  "/" + LngLatDateString +
+      "?units=ca&exclude=currently,minutely,hourly,alerts,flags" +
+      "&callback=locationsList.weatherResponse";
+    script = document.createElement("script");
+    script.src = url;
+    script.id = "script" + index;
+    document.body.appendChild(script);
   }
 }
 
