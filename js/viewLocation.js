@@ -81,22 +81,31 @@ function populateWeatherValue(index, data){
   var year = date.getFullYear();
   var dateString = day + ' ' + monthNames[monthIndex] + ' ' + year;
   document.getElementById("dateTitle").innerText = "Weather Report for "+ dateString;
-  switch (true) {
-    case (data.precipIntensity <= 0.002):
-      precipIntensity = "very light";
-      break;
-    case (data.precipIntensity <= 0.017):
-      precipIntensity = "light";
-      break;
-    case (data.precipIntensity <= 0.2):
-      precipIntensity = "moderate";
-      break;
-    default:
-      precipIntensity = "heavy";
-      break;
-  }
+  console.log(data);
 
-  textString = (data.precipProbability * 100) + "% chance of " + precipIntensity + " " + data.precipType + ".";
+  if (data.precipIntensity) {
+    switch (true) {
+      case (data.precipIntensity <= 0.002):
+        precipIntensity = "very light";
+        break;
+      case (data.precipIntensity <= 0.017):
+        precipIntensity = "light";
+        break;
+      case (data.precipIntensity <= 0.2):
+        precipIntensity = "moderate";
+        break;
+      default:
+        precipIntensity = "heavy";
+        break;
+    }
+  } else {
+    precipIntensity = "";
+  }
+  if (isNaN(data.precipProbability) || data.precipType == undefined) {
+    textString = "No chance of rain.";
+  } else {
+    textString = (data.precipProbability * 100).toFixed(0) + "% chance of " + precipIntensity + " " + data.precipType + ".";
+  }
   document.getElementById("precip").innerText = textString;
   document.getElementById("wind").innerText = data.windSpeed + "km/h winds";
   document.getElementById("humidity").innerText = (data.humidity * 100) + "% humidity";
